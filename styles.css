@@ -1,0 +1,856 @@
+/* リセットCSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Googleフォントのインポート */
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Kiwi+Maru:wght@400;500&display=swap');
+
+/* 基本設定 */
+body {
+    font-family: 'M PLUS Rounded 1c', 'Kiwi Maru', 'Hiragino Kaku Gothic ProN', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #FFFFF0; /* アイボリー */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ヘッダー・ヒーローセクション */
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #E8F5E9 0%, #F5F5DC 100%);
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 2;
+    padding: 20px;
+}
+
+.salon-name {
+    font-size: 3rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    font-weight: 800;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+.catchcopy {
+    font-size: 1.5rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #81C784;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    font-weight: 700;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.cta-button:hover {
+    background-color: #66BB6A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* セクション共通スタイル */
+section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #4CAF50;
+    position: relative;
+    padding-bottom: 20px;
+    font-weight: 700;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: #81C784;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* サービス案内 */
+.services {
+    background-color: #F5FFF5;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.service-item {
+    background-color: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+}
+
+.service-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.service-item h3 {
+    font-size: 1.5rem;
+    color: #4CAF50;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+/* 料金表 */
+.pricing {
+    background-color: #FFFFF0;
+}
+
+.price-tables {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.price-table {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.price-table h3 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+th {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    font-weight: bold;
+}
+
+.small {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.note {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ギャラリー */
+.gallery {
+    background-color: #F5FFF5;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+/* お客様の声 */
+.testimonials {
+    background-color: #FFFFF0;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.stars {
+    color: #FFD700;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.testimonial-text {
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.customer-name {
+    text-align: right;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* 予約方法 */
+.reservation {
+    background-color: #E8F5E9;
+}
+
+/* Web予約ボタン（上段） */
+.web-reservation {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.web-reserve-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #81C784;
+    color: white;
+    padding: 20px 50px;
+    border-radius: 35px;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.web-reserve-button:hover {
+    background-color: #66BB6A;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.button-icon {
+    font-size: 1.5rem;
+}
+
+.button-text {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+/* LINE・電話予約（下段） */
+.reservation-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.method-item {
+    background-color: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.method-item h3 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+.line-button {
+    display: inline-block;
+    background-color: #00B900;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 20px 0;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.line-button:hover {
+    background-color: #009900;
+}
+
+.qr-code {
+    width: 150px;
+    height: 150px;
+    margin-top: 20px;
+}
+
+.phone-number {
+    font-size: 2rem;
+    color: #4CAF50;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+/* アクセス */
+.access {
+    background-color: #FFFFF0;
+}
+
+.access-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.map img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.shop-info {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.shop-info h3 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+.info-table {
+    width: 100%;
+}
+
+.info-table th {
+    background-color: transparent;
+    text-align: left;
+    padding: 10px;
+    color: #666;
+    font-weight: normal;
+    width: 30%;
+    vertical-align: top;
+}
+
+.info-table td {
+    text-align: left;
+    padding: 10px;
+}
+
+/* フッター */
+.footer {
+    background-color: #4CAF50;
+    color: white;
+    padding: 40px 0 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.footer-info h3 {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+.footer-sns {
+    display: flex;
+    gap: 20px;
+}
+
+.sns-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: opacity 0.3s ease;
+}
+
+.sns-link:hover {
+    opacity: 0.8;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.reservation-note {
+    margin: 10px 0;
+    color: #666;
+}
+
+/* iOS風モバイルナビゲーション */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 0 16px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Kiwi Maru', 'M PLUS Rounded 1c', sans-serif;
+}
+
+.nav-reserve-btn {
+    background-color: #81C784;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.nav-reserve-btn:active {
+    opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+    .mobile-nav {
+        display: flex;
+    }
+    
+    body {
+        padding-top: 44px;
+    }
+    
+    .hero {
+        margin-top: -44px;
+        padding-top: calc(44px + env(safe-area-inset-top));
+    }
+}
+
+/* レスポンシブデザイン - タブレット */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .hero {
+        min-height: 400px;
+        padding: 20px 0;
+    }
+    
+    .salon-name {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .catchcopy {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    
+    section {
+        padding: 50px 0;
+    }
+    
+    .service-grid,
+    .price-tables,
+    .testimonial-grid,
+    .reservation-methods {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .access-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .price-table {
+        overflow-x: auto;
+    }
+    
+    table {
+        min-width: 300px;
+    }
+}
+
+/* レスポンシブデザイン - スマートフォン（iOS風） */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .container {
+        padding: 0 16px;
+    }
+    
+    /* iOSステータスバー対応 */
+    .hero {
+        min-height: calc(100vh - env(safe-area-inset-top));
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    section {
+        padding: 40px 0;
+    }
+    
+    .hero {
+        min-height: 350px;
+    }
+    
+    .hero-content {
+        padding: 10px;
+    }
+    
+    .salon-name {
+        font-size: 1.4rem;
+        line-height: 1.3;
+        margin-bottom: 8px;
+    }
+    
+    .catchcopy {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+    
+    .cta-button {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+        border-radius: 25px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+    
+    .section-title::after {
+        width: 60px;
+        height: 2px;
+    }
+    
+    /* サービスカード - iOS風・コンパクト化 */
+    .service-grid {
+        gap: 15px;
+    }
+    
+    .service-item {
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        background-color: rgba(255,255,255,0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .service-icon {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+    
+    .service-item h3 {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+    
+    .service-item p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+    
+    /* 料金表 - コンパクト化 */
+    .price-tables {
+        gap: 20px;
+    }
+    
+    .price-table {
+        padding: 15px;
+        border-radius: 12px;
+    }
+    
+    .price-table h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    table {
+        font-size: 0.8rem;
+    }
+    
+    th, td {
+        padding: 8px 6px;
+    }
+    
+    .small {
+        font-size: 0.7rem;
+    }
+    
+    .note {
+        font-size: 0.75rem;
+        margin-top: 8px;
+    }
+    
+    /* ギャラリー - グリッド調整 */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .gallery-item {
+        border-radius: 8px;
+    }
+    
+    .gallery-item img {
+        height: 140px;
+    }
+    
+    /* お客様の声 - カード風・コンパクト化 */
+    .testimonial-grid {
+        gap: 15px;
+    }
+    
+    .testimonial-item {
+        padding: 15px;
+        border-radius: 12px;
+        background-color: rgba(255,255,255,0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .stars {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+    
+    .testimonial-text {
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin-bottom: 8px;
+    }
+    
+    .customer-name {
+        font-size: 0.7rem;
+    }
+    
+    /* 予約方法 - iOS風・コンパクト化 */
+    .web-reservation {
+        margin-bottom: 25px;
+    }
+    
+    .web-reserve-button {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    
+    .button-icon {
+        font-size: 1.1rem;
+    }
+    
+    .reservation-methods {
+        gap: 15px;
+    }
+    
+    .method-item {
+        padding: 20px 15px;
+        border-radius: 12px;
+    }
+    
+    .method-item h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .method-item p {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+    }
+    
+    .line-button {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+        border-radius: 25px;
+    }
+    
+    .qr-code {
+        width: 120px;
+        height: 120px;
+        margin-top: 15px;
+    }
+    
+    .phone-number {
+        font-size: 1.5rem;
+        margin: 15px 0;
+    }
+    
+    /* アクセス情報 */
+    .shop-info {
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 15px;
+    }
+    
+    .shop-info h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .info-table th,
+    .info-table td {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+    
+    /* フッター */
+    .footer {
+        padding: 30px 0 env(safe-area-inset-bottom);
+    }
+    
+    .footer-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    .footer-info p {
+        font-size: 0.85rem;
+    }
+    
+    .sns-link {
+        font-size: 0.9rem;
+    }
+    
+    .copyright {
+        font-size: 0.75rem;
+        padding-top: 15px;
+    }
+    
+    /* iOS風の影とエフェクト */
+    .service-item:active,
+    .price-table:active,
+    .testimonial-item:active,
+    .method-item:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+    
+    /* タップハイライトを無効化 */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* スクロールバーを非表示 */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}

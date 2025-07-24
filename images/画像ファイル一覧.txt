@@ -1,0 +1,42 @@
+ペットサロンサイトに必要な画像ファイル一覧
+
+【画像の配置場所】
+すべての画像は /Users/runa/projects/pet-salon-website/images/ フォルダに入れてください。
+
+【必要な画像ファイル名と説明】
+
+1. メインビジュアル（ヒーロー画像）
+   - hero-main.jpg
+   - 説明：トップページのメイン画像（トリミングされた可愛いペットの写真）
+   - 推奨サイズ：1200x600px
+
+2. ギャラリー画像（6枚）
+   - gallery-01.jpg （トイプードルのトリミング後）
+   - gallery-02.jpg （柴犬のトリミング後）
+   - gallery-03.jpg （マルチーズのトリミング後）
+   - gallery-04.jpg （ポメラニアンのトリミング後）
+   - gallery-05.jpg （猫ちゃんのトリミング後）
+   - gallery-06.jpg （ダックスフンドのトリミング後）
+   - 推奨サイズ：300x300px（正方形）
+
+3. LINE QRコード
+   - line-qr.png
+   - 説明：LINE公式アカウントのQRコード
+   - 推奨サイズ：200x200px
+
+【画像を反映させる方法】
+1. 上記のファイル名で画像を用意
+2. /Users/runa/projects/pet-salon-website/images/ フォルダに保存
+3. HTMLファイルのプレースホルダーURLを実際の画像パスに置き換え
+
+例：
+変更前：src="https://via.placeholder.com/300x300/..."
+変更後：src="images/gallery-01.jpg"
+
+【オプション画像（あると良い）】
+- shop-photo.jpg （店舗外観または内観）
+- map.jpg （アクセスマップ）
+- staff-01.jpg （スタッフ写真）
+
+画像形式は .jpg または .png を推奨します。
+ファイルサイズは Web用に最適化（1枚あたり200KB以下）してください。
