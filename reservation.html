@@ -174,6 +174,18 @@
             cursor: not-allowed;
         }
 
+        .time-slot.reserved {
+            background-color: #FFE0B2;
+            color: #E65100;
+            cursor: not-allowed;
+            font-size: 0.9rem;
+        }
+
+        .time-slot.reserved::after {
+            content: ' (予約中)';
+            font-size: 0.8rem;
+        }
+
         /* サービス時間表示 */
         .service-duration {
             margin-top: 20px;
@@ -191,6 +203,21 @@
         .duration-text {
             font-size: 1.1rem;
             color: #F57C00;
+            font-weight: bold;
+        }
+
+        /* 選択した時間情報 */
+        .selected-time-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #E8F5E9;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .time-info-text {
+            font-size: 1rem;
+            color: #2E7D32;
             font-weight: bold;
         }
 
@@ -317,8 +344,34 @@
                 <h1 class="section-title">ご予約フォーム</h1>
                 
                 <form id="reservationForm">
+                    <!-- サービス選択 -->
+                    <div class="form-group">
+                        <label>ご希望のサービス（複数選択可）</label>
+                        <div class="service-options">
+                            <div class="service-option" onclick="toggleService(this)" data-duration="90">
+                                <input type="checkbox" name="service" value="trimming">
+                                <label>トリミング（約90分）</label>
+                            </div>
+                            <div class="service-option" onclick="toggleService(this)" data-duration="60">
+                                <input type="checkbox" name="service" value="shampoo">
+                                <label>シャンプー（約60分）</label>
+                            </div>
+                            <div class="service-option" onclick="toggleService(this)" data-duration="0">
+                                <input type="checkbox" name="service" value="hotel">
+                                <label>ペットホテル</label>
+                            </div>
+                            <div class="service-option" onclick="toggleService(this)" data-duration="30">
+                                <input type="checkbox" name="service" value="spa">
+                                <label>スパ・エステ（約30分）</label>
+                            </div>
+                        </div>
+                        <div class="service-duration" id="serviceDuration">
+                            <p class="duration-text">施術時間の目安：<span id="totalDuration">0</span>分</p>
+                        </div>
+                    </div>
+
                     <!-- カレンダー -->
-                    <div class="calendar-container">
+                    <div class="calendar-container" id="calendarContainer" style="display: none;">
                         <h3>ご希望の日付を選択してください</h3>
                         <div class="calendar-header">
                             <button type="button" class="nav-button" onclick="previousMonth()">＜ 前月</button>
@@ -357,31 +410,8 @@
                             <div class="time-slot" onclick="selectTime(this)">17:00</div>
                             <div class="time-slot" onclick="selectTime(this)">17:30</div>
                         </div>
-                    </div>
-
-                    <!-- サービス選択 -->
-                    <div class="form-group">
-                        <label>ご希望のサービス（複数選択可）</label>
-                        <div class="service-options">
-                            <div class="service-option" onclick="toggleService(this)" data-duration="90">
-                                <input type="checkbox" name="service" value="trimming">
-                                <label>トリミング（約90分）</label>
-                            </div>
-                            <div class="service-option" onclick="toggleService(this)" data-duration="60">
-                                <input type="checkbox" name="service" value="shampoo">
-                                <label>シャンプー（約60分）</label>
-                            </div>
-                            <div class="service-option" onclick="toggleService(this)" data-duration="0">
-                                <input type="checkbox" name="service" value="hotel">
-                                <label>ペットホテル</label>
-                            </div>
-                            <div class="service-option" onclick="toggleService(this)" data-duration="30">
-                                <input type="checkbox" name="service" value="spa">
-                                <label>スパ・エステ（約30分）</label>
-                            </div>
-                        </div>
-                        <div class="service-duration" id="serviceDuration">
-                            <p class="duration-text">施術時間の目安：<span id="totalDuration">0</span>分</p>
+                        <div class="selected-time-info" id="selectedTimeInfo" style="display: none;">
+                            <p class="time-info-text">選択した時間：<span id="selectedTimeSpan"></span> 〜 <span id="endTimeSpan"></span></p>
                         </div>
                     </div>
 
@@ -536,12 +566,58 @@
         function selectTime(element) {
             if (element.classList.contains('disabled')) return;
             
-            document.querySelectorAll('.time-slot').forEach(slot => {
-                slot.classList.remove('selected');
+            const totalDuration = calculateTotalDuration();
+            const timeSlots = document.querySelectorAll('.time-slot');
+            const selectedIndex = Array.from(timeSlots).indexOf(element);
+            const slotsNeeded = Math.ceil(totalDuration / 30);
+            
+            // Clear previous selection
+            timeSlots.forEach(slot => {
+                slot.classList.remove('selected', 'reserved');
             });
             
+            // Check if we have enough consecutive slots
+            let canReserve = true;
+            for (let i = 0; i < slotsNeeded; i++) {
+                if (selectedIndex + i >= timeSlots.length || timeSlots[selectedIndex + i].classList.contains('disabled')) {
+                    canReserve = false;
+                    break;
+                }
+            }
+            
+            if (!canReserve) {
+                alert('選択した時間からは必要な時間を確保できません。他の時間を選択してください。');
+                return;
+            }
+            
+            // Mark selected time and reserve subsequent slots
             element.classList.add('selected');
             selectedTime = element.textContent;
+            
+            // Mark reserved slots
+            for (let i = 1; i < slotsNeeded; i++) {
+                timeSlots[selectedIndex + i].classList.add('reserved');
+            }
+            
+            // Show selected time info
+            const startTime = element.textContent;
+            const endTimeMinutes = parseTimeToMinutes(startTime) + totalDuration;
+            const endTime = formatMinutesToTime(endTimeMinutes);
+            
+            document.getElementById('selectedTimeSpan').textContent = startTime;
+            document.getElementById('endTimeSpan').textContent = endTime;
+            document.getElementById('selectedTimeInfo').style.display = 'block';
+        }
+        
+        function parseTimeToMinutes(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+        
+        function formatMinutesToTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours}:${mins.toString().padStart(2, '0')}`;
         }
 
         function toggleService(element) {
@@ -551,6 +627,15 @@
             
             // Calculate total duration
             calculateTotalDuration();
+            
+            // Show calendar if at least one service is selected
+            const selectedServices = document.querySelectorAll('.service-option.selected');
+            if (selectedServices.length > 0) {
+                document.getElementById('calendarContainer').style.display = 'block';
+            } else {
+                document.getElementById('calendarContainer').style.display = 'none';
+                document.getElementById('timeSelection').style.display = 'none';
+            }
             
             // Update time slots if date is selected
             if (selectedDate) {
