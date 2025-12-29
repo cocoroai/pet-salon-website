@@ -3,82 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ご予約 | ペットサロン わんにゃんパラダイス</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ご予約 | わんにゃんパラダイス</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* カレンダー専用スタイル */
-        .reservation-form-section {
-            min-height: calc(100vh - 100px);
-            padding: 50px 0;
-            background: linear-gradient(135deg, #F5FFF5 0%, #FFFFF0 100%);
+        :root {
+            --color-primary: #FF6B6B;
+            --color-secondary: #4ECDC4;
+            --color-accent: #FFE66D;
+            --color-purple: #A78BFA;
+            --color-blue: #60A5FA;
+            --color-orange: #FB923C;
+            --color-green: #34D399;
+            --color-dark: #2D3748;
+            --color-gray: #718096;
+            --color-gray-light: #E2E8F0;
+            --color-light: #F7FAFC;
+            --color-white: #FFFFFF;
+            --font-main: 'Zen Maru Gothic', 'Nunito', sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
-        .form-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 40px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .calendar-container {
-            margin-bottom: 40px;
+        body {
+            font-family: var(--font-main);
+            color: var(--color-dark);
+            line-height: 1.6;
+            background: linear-gradient(135deg, #FFF5F5 0%, #F0FDFA 100%);
+            min-height: 100vh;
         }
 
-        .calendar-header {
+        /* Header */
+        .header {
+            background: var(--color-white);
+            padding: 0.75rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #E8F5E9;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--color-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            text-decoration: none;
+        }
+
+        /* Progress */
+        .progress-section {
+            background: var(--color-white);
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-gray-light);
+        }
+
+        .progress-bar {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 14px;
+            left: 15%;
+            right: 15%;
+            height: 3px;
+            background: var(--color-gray-light);
+            border-radius: 2px;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-white);
+            border: 3px solid var(--color-gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .progress-icon {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .progress-step.completed .progress-icon {
+            background: var(--color-green);
+            border-color: var(--color-green);
+        }
+
+        .progress-label {
+            font-size: 0.7rem;
+            color: var(--color-gray);
+            margin-top: 0.3rem;
+        }
+
+        .progress-step.active .progress-label {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Main */
+        .main {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .step-subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--color-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Pet Type Selection */
+        .pet-type-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pet-type-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .pet-type-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .pet-type-card.selected {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 100%);
+        }
+
+        .pet-type-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pet-type-name {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        /* Service Selection */
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .service-item {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: 0.875rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .service-item:hover {
+            border-color: var(--color-gray-light);
+        }
+
+        .service-item.selected {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 100%);
+        }
+
+        .service-icon {
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
         }
 
-        .month-year {
-            font-size: 1.5rem;
-            color: #4CAF50;
-            font-weight: bold;
+        .service-trimming .service-icon { background: #FEE2E2; }
+        .service-hotel .service-icon { background: #DBEAFE; }
+        .service-spa .service-icon { background: #D1FAE5; }
+        .service-pickup .service-icon { background: #FEF3C7; }
+
+        .service-info {
+            flex: 1;
         }
 
-        .nav-button {
-            background-color: #81C784;
-            color: white;
+        .service-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .service-desc {
+            font-size: 0.75rem;
+            color: var(--color-gray);
+        }
+
+        .service-price {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .service-check {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--color-gray-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-item.selected .service-check {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        /* Size Selection */
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .size-card {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .size-card:hover {
+            border-color: var(--color-gray-light);
+        }
+
+        .size-card.selected {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 100%);
+        }
+
+        .size-icon {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .size-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .size-weight {
+            font-size: 0.7rem;
+            color: var(--color-gray);
+        }
+
+        /* Calendar */
+        .calendar-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #FF8E8E 100%);
+            color: var(--color-white);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calendar-nav {
+            background: rgba(255,255,255,0.2);
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            color: var(--color-white);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             cursor: pointer;
             font-size: 1rem;
-            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .nav-button:hover {
-            background-color: #66BB6A;
+        .calendar-month {
+            font-size: 1rem;
+            font-weight: 700;
         }
 
-        .calendar {
+        .calendar-weekdays {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            margin-bottom: 30px;
+            background: var(--color-light);
+            padding: 0.5rem 0;
         }
 
-        .day-header {
+        .calendar-weekday {
             text-align: center;
-            padding: 10px;
-            font-weight: bold;
-            color: #4CAF50;
-            background-color: #F1F8E9;
-            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--color-gray);
         }
 
-        .day-header.sunday {
-            color: #FF6B6B;
-        }
+        .calendar-weekday:first-child { color: var(--color-primary); }
+        .calendar-weekday:last-child { color: var(--color-blue); }
 
-        .day-header.saturday {
-            color: #4ECDC4;
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            padding: 0.5rem;
         }
 
         .calendar-day {
@@ -86,625 +404,1037 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #E0E0E0;
-            border-radius: 10px;
+            font-size: 0.85rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            background-color: white;
-            position: relative;
+            transition: all 0.2s ease;
         }
 
-        .calendar-day:hover:not(.disabled):not(.selected) {
-            border-color: #81C784;
-            background-color: #F1F8E9;
-            transform: scale(1.05);
-        }
-
-        .calendar-day.disabled {
-            background-color: #F5F5F5;
-            color: #BDBDBD;
-            cursor: not-allowed;
+        .calendar-day:hover:not(.disabled):not(.empty) {
+            background: var(--color-light);
         }
 
         .calendar-day.selected {
-            background-color: #81C784;
-            color: white;
-            border-color: #66BB6A;
-            font-weight: bold;
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-weight: 700;
         }
 
-        .calendar-day.today {
-            border-color: #FFD54F;
-            background-color: #FFF9C4;
-        }
-
-        .calendar-day.full {
-            background-color: #FFEBEE;
-            color: #E57373;
+        .calendar-day.disabled {
+            color: var(--color-gray-light);
             cursor: not-allowed;
         }
 
-        .calendar-day .slots {
-            position: absolute;
-            bottom: 2px;
-            font-size: 0.7rem;
-            color: #666;
-        }
+        .calendar-day.sunday { color: var(--color-primary); }
+        .calendar-day.saturday { color: var(--color-blue); }
+        .calendar-day.selected.sunday,
+        .calendar-day.selected.saturday { color: var(--color-white); }
 
-        .calendar-day.selected .slots {
-            color: white;
-        }
-
-        /* 時間選択 */
-        .time-selection {
-            margin-bottom: 30px;
-        }
-
-        .time-slots {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .time-slot {
-            padding: 10px;
-            text-align: center;
-            border: 2px solid #E0E0E0;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background-color: white;
-        }
-
-        .time-slot:hover:not(.disabled):not(.selected) {
-            border-color: #81C784;
-            background-color: #F1F8E9;
-        }
-
-        .time-slot.selected {
-            background-color: #81C784;
-            color: white;
-            border-color: #66BB6A;
-        }
-
-        .time-slot.disabled {
-            background-color: #F5F5F5;
-            color: #BDBDBD;
-            cursor: not-allowed;
-        }
-
-        .time-slot.reserved {
-            background-color: #FFE0B2;
-            color: #E65100;
-            cursor: not-allowed;
-            font-size: 0.9rem;
-        }
-
-        .time-slot.reserved::after {
-            content: ' (予約中)';
-            font-size: 0.8rem;
-        }
-
-        /* サービス時間表示 */
-        .service-duration {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #FFF9C4;
-            border-radius: 10px;
-            text-align: center;
+        /* Time Slots */
+        .time-section {
             display: none;
         }
 
-        .service-duration.show {
+        .time-section.show {
             display: block;
         }
 
-        .duration-text {
-            font-size: 1.1rem;
-            color: #F57C00;
-            font-weight: bold;
-        }
-
-        /* 選択した時間情報 */
-        .selected-time-info {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #E8F5E9;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .time-info-text {
-            font-size: 1rem;
-            color: #2E7D32;
-            font-weight: bold;
-        }
-
-        /* フォーム要素 */
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #E0E0E0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #81C784;
-        }
-
-        .service-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .service-option {
+        .time-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
-            padding: 15px;
-            border: 2px solid #E0E0E0;
-            border-radius: 10px;
+            gap: 0.3rem;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .time-slot {
+            padding: 0.6rem;
+            background: var(--color-white);
+            border: 2px solid var(--color-gray-light);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
         }
 
-        .service-option:hover {
-            border-color: #81C784;
-            background-color: #F1F8E9;
+        .time-slot:hover:not(.disabled) {
+            border-color: var(--color-primary);
         }
 
-        .service-option input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
+        .time-slot.selected {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: var(--color-white);
+            font-weight: 600;
         }
 
-        .service-option.selected {
-            background-color: #E8F5E9;
-            border-color: #81C784;
+        .time-slot.disabled {
+            background: var(--color-light);
+            color: var(--color-gray-light);
+            cursor: not-allowed;
+            text-decoration: line-through;
         }
 
-        .submit-button {
+        /* Form */
+        .form-section {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-label .required {
+            color: var(--color-primary);
+            font-size: 0.7rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
             width: 100%;
-            padding: 15px;
-            background-color: #81C784;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
+            padding: 0.7rem 0.875rem;
+            border: 2px solid var(--color-gray-light);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #CBD5E0;
+        }
+
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        /* Pet Info Card */
+        .pet-info-card {
+            background: linear-gradient(135deg, #FFF5F5 0%, #F0FDFA 100%);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .pet-info-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 30px;
         }
 
-        .submit-button:hover {
-            background-color: #66BB6A;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .checkbox-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-gray-light);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+            transition: all 0.3s ease;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: #4CAF50;
+        .checkbox-box.checked {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .checkbox-label {
+            font-size: 0.8rem;
+            color: var(--color-gray);
+            line-height: 1.5;
+        }
+
+        .checkbox-label a {
+            color: var(--color-primary);
+        }
+
+        /* Confirmation */
+        .confirm-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+
+        .confirm-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #FF8E8E 100%);
+            color: var(--color-white);
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .confirm-body {
+            padding: 1rem;
+        }
+
+        .confirm-row {
+            display: flex;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed var(--color-gray-light);
+        }
+
+        .confirm-row:last-child {
+            border-bottom: none;
+        }
+
+        .confirm-label {
+            width: 80px;
+            font-size: 0.75rem;
+            color: var(--color-gray);
+            flex-shrink: 0;
+        }
+
+        .confirm-value {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .confirm-total {
+            background: var(--color-light);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .confirm-total-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .confirm-total-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        /* Complete */
+        .complete-section {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .complete-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--color-green) 0%, #6EE7B7 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .complete-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .complete-message {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .complete-details {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            text-align: left;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .complete-details-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px dashed var(--color-gray-light);
+        }
+
+        .complete-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 30px;
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
             text-decoration: none;
-            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            border: none;
         }
 
-        .back-link:hover {
-            color: #66BB6A;
+        .btn-back {
+            background: var(--color-white);
+            border: 2px solid var(--color-gray-light);
+            color: var(--color-gray);
         }
 
-        /* レスポンシブ対応 */
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 20px;
-            }
+        .btn-back:hover {
+            border-color: var(--color-dark);
+            color: var(--color-dark);
+        }
 
-            .calendar {
-                gap: 2px;
-            }
+        .btn-next {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #FF8E8E 100%);
+            color: var(--color-white);
+        }
 
-            .calendar-day {
-                font-size: 0.9rem;
-            }
+        .btn-next:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
 
-            .time-slots {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            }
+        .btn-next:disabled {
+            background: var(--color-gray-light);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-home {
+            background: var(--color-dark);
+            color: var(--color-white);
+        }
+
+        /* Summary Bar */
+        .summary-bar {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .summary-label {
+            color: var(--color-gray);
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--color-primary);
         }
     </style>
 </head>
 <body>
-    <div class="reservation-form-section">
-        <div class="container">
-            <a href="index.html" class="back-link">← トップページに戻る</a>
-            
-            <div class="form-container">
-                <h1 class="section-title">ご予約フォーム</h1>
-                
-                <form id="reservationForm">
-                    <!-- サービス選択 -->
-                    <div class="form-group">
-                        <label>ご希望のサービス（複数選択可）</label>
-                        <div class="service-options">
-                            <div class="service-option" onclick="toggleService(this)" data-duration="90">
-                                <input type="checkbox" name="service" value="trimming">
-                                <label>トリミング（約90分）</label>
-                            </div>
-                            <div class="service-option" onclick="toggleService(this)" data-duration="60">
-                                <input type="checkbox" name="service" value="shampoo">
-                                <label>シャンプー（約60分）</label>
-                            </div>
-                            <div class="service-option" onclick="toggleService(this)" data-duration="0">
-                                <input type="checkbox" name="service" value="hotel">
-                                <label>ペットホテル</label>
-                            </div>
-                            <div class="service-option" onclick="toggleService(this)" data-duration="30">
-                                <input type="checkbox" name="service" value="spa">
-                                <label>スパ・エステ（約30分）</label>
-                            </div>
-                        </div>
-                        <div class="service-duration" id="serviceDuration">
-                            <p class="duration-text">施術時間の目安：<span id="totalDuration">0</span>分</p>
-                        </div>
-                    </div>
+    <!-- Header -->
+    <header class="header">
+        <a href="index-v2.html" class="header-back">
+            ← 戻る
+        </a>
+        <a href="index-v2.html" class="header-logo">
+            🐾 わんにゃんパラダイス
+        </a>
+        <div style="width: 50px;"></div>
+    </header>
 
-                    <!-- カレンダー -->
-                    <div class="calendar-container" id="calendarContainer" style="display: none;">
-                        <h3>ご希望の日付を選択してください</h3>
-                        <div class="calendar-header">
-                            <button type="button" class="nav-button" onclick="previousMonth()">＜ 前月</button>
-                            <div class="month-year" id="currentMonth">2024年1月</div>
-                            <button type="button" class="nav-button" onclick="nextMonth()">次月 ＞</button>
-                        </div>
-                        <div class="calendar" id="calendar">
-                            <div class="day-header sunday">日</div>
-                            <div class="day-header">月</div>
-                            <div class="day-header">火</div>
-                            <div class="day-header">水</div>
-                            <div class="day-header">木</div>
-                            <div class="day-header">金</div>
-                            <div class="day-header saturday">土</div>
-                        </div>
-                    </div>
-
-                    <!-- 時間選択 -->
-                    <div class="time-selection" id="timeSelection" style="display: none;">
-                        <h3>ご希望の時間を選択してください</h3>
-                        <div class="time-slots" id="timeSlots">
-                            <div class="time-slot" onclick="selectTime(this)">9:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">9:30</div>
-                            <div class="time-slot" onclick="selectTime(this)">10:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">10:30</div>
-                            <div class="time-slot" onclick="selectTime(this)">11:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">11:30</div>
-                            <div class="time-slot" onclick="selectTime(this)">13:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">13:30</div>
-                            <div class="time-slot" onclick="selectTime(this)">14:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">14:30</div>
-                            <div class="time-slot" onclick="selectTime(this)">15:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">15:30</div>
-                            <div class="time-slot" onclick="selectTime(this)">16:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">16:30</div>
-                            <div class="time-slot" onclick="selectTime(this)">17:00</div>
-                            <div class="time-slot" onclick="selectTime(this)">17:30</div>
-                        </div>
-                        <div class="selected-time-info" id="selectedTimeInfo" style="display: none;">
-                            <p class="time-info-text">選択した時間：<span id="selectedTimeSpan"></span> 〜 <span id="endTimeSpan"></span></p>
-                        </div>
-                    </div>
-
-                    <!-- ペット情報 -->
-                    <div class="form-group">
-                        <label for="petType">ペットの種類</label>
-                        <select id="petType" name="petType" required>
-                            <option value="">選択してください</option>
-                            <option value="dog-small">犬（小型）</option>
-                            <option value="dog-medium">犬（中型）</option>
-                            <option value="dog-large">犬（大型）</option>
-                            <option value="cat">猫</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="petName">ペットのお名前</label>
-                        <input type="text" id="petName" name="petName" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="petAge">年齢</label>
-                        <input type="text" id="petAge" name="petAge" placeholder="例：3歳">
-                    </div>
-
-                    <!-- 飼い主情報 -->
-                    <div class="form-group">
-                        <label for="ownerName">飼い主様のお名前</label>
-                        <input type="text" id="ownerName" name="ownerName" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone">電話番号</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="090-1234-5678">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">メールアドレス</label>
-                        <input type="email" id="email" name="email" placeholder="example@email.com">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notes">ご要望・備考</label>
-                        <textarea id="notes" name="notes" rows="4" placeholder="カットのご要望や、ペットの性格など"></textarea>
-                    </div>
-
-                    <button type="submit" class="submit-button">予約を確定する</button>
-                </form>
+    <!-- Progress -->
+    <div class="progress-section">
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                <div class="progress-icon">🐕</div>
+                <div class="progress-label">ペット</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="progress-icon">✂️</div>
+                <div class="progress-label">メニュー</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="progress-icon">📅</div>
+                <div class="progress-label">日時</div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="progress-icon">📝</div>
+                <div class="progress-label">情報</div>
+            </div>
+            <div class="progress-step" data-step="5">
+                <div class="progress-icon">✓</div>
+                <div class="progress-label">確認</div>
             </div>
         </div>
     </div>
 
+    <!-- Main -->
+    <main class="main">
+        <!-- Step 1: Pet Type -->
+        <div class="step-content active" data-step="1">
+            <h2 class="step-title">🐾 ペットの種類</h2>
+            <p class="step-subtitle">ご予約するペットを選んでください</p>
+
+            <div class="pet-type-grid">
+                <div class="pet-type-card" data-pet="dog">
+                    <div class="pet-type-icon">🐕</div>
+                    <div class="pet-type-name">わんちゃん</div>
+                </div>
+                <div class="pet-type-card" data-pet="cat">
+                    <div class="pet-type-icon">🐈</div>
+                    <div class="pet-type-name">ねこちゃん</div>
+                </div>
+            </div>
+
+            <h3 class="step-title" style="font-size: 1.1rem; margin-top: 1.5rem;">📏 サイズ</h3>
+            <p class="step-subtitle">ペットのサイズを選んでください</p>
+
+            <div class="size-grid" id="sizeGrid">
+                <div class="size-card" data-size="small">
+                    <div class="size-icon">🐕</div>
+                    <div class="size-name">小型</div>
+                    <div class="size-weight">〜10kg</div>
+                </div>
+                <div class="size-card" data-size="medium">
+                    <div class="size-icon">🐕‍🦺</div>
+                    <div class="size-name">中型</div>
+                    <div class="size-weight">10〜25kg</div>
+                </div>
+                <div class="size-card" data-size="large">
+                    <div class="size-icon">🦮</div>
+                    <div class="size-name">大型</div>
+                    <div class="size-weight">25kg〜</div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-next" id="toStep2" disabled>
+                    次へ →
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Service Selection -->
+        <div class="step-content" data-step="2">
+            <h2 class="step-title">✂️ メニュー選択</h2>
+            <p class="step-subtitle">ご希望のサービスを選んでください</p>
+
+            <div class="summary-bar" id="petSummary"></div>
+
+            <div class="service-list">
+                <div class="service-item service-trimming" data-service="trimming" data-price="3500" data-name="シャンプー&カット">
+                    <div class="service-icon">✂️</div>
+                    <div class="service-info">
+                        <div class="service-name">シャンプー&カット</div>
+                        <div class="service-desc">全身カット・シャンプー・爪切り込み</div>
+                    </div>
+                    <div class="service-price">¥3,500〜</div>
+                    <div class="service-check">✓</div>
+                </div>
+
+                <div class="service-item service-spa" data-service="shampoo" data-price="2500" data-name="シャンプーコース">
+                    <div class="service-icon">🛁</div>
+                    <div class="service-info">
+                        <div class="service-name">シャンプーコース</div>
+                        <div class="service-desc">シャンプー・ブロー・爪切り込み</div>
+                    </div>
+                    <div class="service-price">¥2,500〜</div>
+                    <div class="service-check">✓</div>
+                </div>
+
+                <div class="service-item service-hotel" data-service="hotel" data-price="3000" data-name="ペットホテル">
+                    <div class="service-icon">🏠</div>
+                    <div class="service-info">
+                        <div class="service-name">ペットホテル</div>
+                        <div class="service-desc">1泊〜お預かり</div>
+                    </div>
+                    <div class="service-price">¥3,000〜/泊</div>
+                    <div class="service-check">✓</div>
+                </div>
+
+                <div class="service-item service-pickup" data-service="pickup" data-price="500" data-name="送迎サービス">
+                    <div class="service-icon">🚗</div>
+                    <div class="service-info">
+                        <div class="service-name">送迎サービス</div>
+                        <div class="service-desc">ご自宅までお迎え</div>
+                    </div>
+                    <div class="service-price">¥500〜</div>
+                    <div class="service-check">✓</div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-back" id="backToStep1">← 戻る</button>
+                <button class="btn btn-next" id="toStep3" disabled>次へ →</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Date & Time -->
+        <div class="step-content" data-step="3">
+            <h2 class="step-title">📅 日時選択</h2>
+            <p class="step-subtitle">ご希望の日時を選んでください</p>
+
+            <div class="summary-bar" id="serviceSummary"></div>
+
+            <div class="calendar-card">
+                <div class="calendar-header">
+                    <button class="calendar-nav" id="prevMonth">◀</button>
+                    <div class="calendar-month" id="calendarMonth"></div>
+                    <button class="calendar-nav" id="nextMonth">▶</button>
+                </div>
+                <div class="calendar-weekdays">
+                    <div class="calendar-weekday">日</div>
+                    <div class="calendar-weekday">月</div>
+                    <div class="calendar-weekday">火</div>
+                    <div class="calendar-weekday">水</div>
+                    <div class="calendar-weekday">木</div>
+                    <div class="calendar-weekday">金</div>
+                    <div class="calendar-weekday">土</div>
+                </div>
+                <div class="calendar-days" id="calendarDays"></div>
+            </div>
+
+            <div class="time-section" id="timeSection">
+                <div class="time-label">⏰ <span id="selectedDateLabel"></span>の空き状況</div>
+                <div class="time-grid" id="timeGrid"></div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-back" id="backToStep2">← 戻る</button>
+                <button class="btn btn-next" id="toStep4" disabled>次へ →</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Customer Info -->
+        <div class="step-content" data-step="4">
+            <h2 class="step-title">📝 お客様情報</h2>
+            <p class="step-subtitle">ご連絡先を入力してください</p>
+
+            <div class="summary-bar" id="dateSummary"></div>
+
+            <div class="form-section">
+                <div class="pet-info-card">
+                    <div class="pet-info-title">🐾 ペット情報</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ペットのお名前 <span class="required">*必須</span></label>
+                            <input type="text" class="form-input" id="petName" placeholder="ポチ">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">犬種・猫種</label>
+                            <input type="text" class="form-input" id="petBreed" placeholder="トイプードル">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">年齢</label>
+                        <select class="form-select" id="petAge">
+                            <option value="">選択してください</option>
+                            <option value="under1">1歳未満</option>
+                            <option value="1-3">1〜3歳</option>
+                            <option value="4-7">4〜7歳</option>
+                            <option value="8-10">8〜10歳</option>
+                            <option value="over10">10歳以上</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">お名前 <span class="required">*必須</span></label>
+                        <input type="text" class="form-input" id="ownerName" placeholder="山田 太郎">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">フリガナ <span class="required">*必須</span></label>
+                        <input type="text" class="form-input" id="ownerNameKana" placeholder="ヤマダ タロウ">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">電話番号 <span class="required">*必須</span></label>
+                        <input type="tel" class="form-input" id="phone" placeholder="090-1234-5678">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">メール <span class="required">*必須</span></label>
+                        <input type="email" class="form-input" id="email" placeholder="example@email.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ご要望・備考</label>
+                    <textarea class="form-textarea" id="note" placeholder="アレルギーや気になる点があればご記入ください"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group" id="agreeTerms">
+                        <div class="checkbox-box">✓</div>
+                        <div class="checkbox-label">
+                            <a href="#">利用規約</a>および<a href="#">プライバシーポリシー</a>に同意します
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-back" id="backToStep3">← 戻る</button>
+                <button class="btn btn-next" id="toStep5" disabled>確認へ →</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Confirmation -->
+        <div class="step-content" data-step="5">
+            <h2 class="step-title">✅ ご予約内容の確認</h2>
+            <p class="step-subtitle">以下の内容でよろしければ確定してください</p>
+
+            <div class="confirm-card">
+                <div class="confirm-header">🐾 ペット情報</div>
+                <div class="confirm-body">
+                    <div class="confirm-row">
+                        <div class="confirm-label">種類</div>
+                        <div class="confirm-value" id="confirmPetType"></div>
+                    </div>
+                    <div class="confirm-row">
+                        <div class="confirm-label">お名前</div>
+                        <div class="confirm-value" id="confirmPetName"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confirm-card">
+                <div class="confirm-header">📋 予約内容</div>
+                <div class="confirm-body">
+                    <div class="confirm-row">
+                        <div class="confirm-label">メニュー</div>
+                        <div class="confirm-value" id="confirmService"></div>
+                    </div>
+                    <div class="confirm-row">
+                        <div class="confirm-label">日時</div>
+                        <div class="confirm-value" id="confirmDateTime"></div>
+                    </div>
+                </div>
+                <div class="confirm-total">
+                    <div class="confirm-total-label">合計（税込）</div>
+                    <div class="confirm-total-price" id="confirmPrice"></div>
+                </div>
+            </div>
+
+            <div class="confirm-card">
+                <div class="confirm-header">👤 お客様情報</div>
+                <div class="confirm-body">
+                    <div class="confirm-row">
+                        <div class="confirm-label">お名前</div>
+                        <div class="confirm-value" id="confirmOwner"></div>
+                    </div>
+                    <div class="confirm-row">
+                        <div class="confirm-label">電話番号</div>
+                        <div class="confirm-value" id="confirmPhone"></div>
+                    </div>
+                    <div class="confirm-row">
+                        <div class="confirm-label">メール</div>
+                        <div class="confirm-value" id="confirmEmail"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-back" id="backToStep4">← 戻る</button>
+                <button class="btn btn-next" id="confirmBooking">予約を確定 🎉</button>
+            </div>
+        </div>
+
+        <!-- Step 6: Complete -->
+        <div class="step-content" data-step="6">
+            <div class="complete-section">
+                <div class="complete-icon">🎉</div>
+                <h2 class="complete-title">ご予約ありがとうございます！</h2>
+                <p class="complete-message">
+                    ご予約を承りました。<br>
+                    確認メールをお送りしましたのでご確認ください。<br>
+                    ご来店を心よりお待ちしております🐾
+                </p>
+
+                <div class="complete-details">
+                    <div class="complete-details-title">予約番号</div>
+                    <div class="complete-number" id="bookingNumber"></div>
+                    <div class="confirm-row">
+                        <div class="confirm-label">日時</div>
+                        <div class="confirm-value" id="completeDateTime"></div>
+                    </div>
+                    <div class="confirm-row">
+                        <div class="confirm-label">メニュー</div>
+                        <div class="confirm-value" id="completeService"></div>
+                    </div>
+                    <div class="confirm-row">
+                        <div class="confirm-label">ペット</div>
+                        <div class="confirm-value" id="completePet"></div>
+                    </div>
+                </div>
+
+                <a href="index-v2.html" class="btn btn-home" style="display: inline-flex;">
+                    🏠 トップページへ
+                </a>
+            </div>
+        </div>
+    </main>
+
     <script>
-        let currentDate = new Date();
-        let selectedDate = null;
-        let selectedTime = null;
+        // Booking State
+        const state = {
+            petType: null,
+            petSize: null,
+            services: [],
+            date: null,
+            time: null,
+            petInfo: {},
+            ownerInfo: {}
+        };
 
-        function renderCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            
-            document.getElementById('currentMonth').textContent = `${year}年${month + 1}月`;
-            
-            const firstDay = new Date(year, month, 1).getDay();
-            const lastDate = new Date(year, month + 1, 0).getDate();
-            const today = new Date();
-            
-            const calendar = document.getElementById('calendar');
-            // Keep headers, remove date cells
-            const headers = calendar.querySelectorAll('.day-header');
-            calendar.innerHTML = '';
-            headers.forEach(header => calendar.appendChild(header));
-            
-            // Empty cells before first day
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('div');
-                calendar.appendChild(emptyCell);
-            }
-            
-            // Date cells
-            for (let date = 1; date <= lastDate; date++) {
-                const dayCell = document.createElement('div');
-                dayCell.className = 'calendar-day';
-                dayCell.textContent = date;
-                
-                const cellDate = new Date(year, month, date);
-                const isToday = cellDate.toDateString() === today.toDateString();
-                const isPast = cellDate < today;
-                const isWednesday = cellDate.getDay() === 3;
-                
-                if (isToday) {
-                    dayCell.classList.add('today');
-                }
-                
-                if (isPast || isWednesday) {
-                    dayCell.classList.add('disabled');
-                } else {
-                    // Random availability
-                    const random = Math.random();
-                    if (random > 0.8) {
-                        dayCell.classList.add('full');
-                        dayCell.innerHTML = date + '<div class="slots">満</div>';
-                        dayCell.onclick = null; // 満席は選択不可
-                    } else if (random > 0.5) {
-                        dayCell.innerHTML = date + '<div class="slots">△</div>';
-                        dayCell.onclick = () => selectDate(year, month, date);
-                    } else {
-                        dayCell.innerHTML = date + '<div class="slots">◯</div>';
-                        dayCell.onclick = () => selectDate(year, month, date);
-                    }
-                }
-                
-                calendar.appendChild(dayCell);
-            }
-        }
+        let currentStep = 1;
+        let currentMonth = new Date();
 
-        function previousMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-        }
+        // Pet Type Selection
+        const petCards = document.querySelectorAll('.pet-type-card');
+        const sizeCards = document.querySelectorAll('.size-card');
+        const toStep2Btn = document.getElementById('toStep2');
 
-        function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-        }
-
-        function selectDate(year, month, date) {
-            const clickedDay = event.target.closest('.calendar-day');
-            
-            // 満席の日は選択できない
-            if (clickedDay.classList.contains('full')) {
-                return;
-            }
-            
-            selectedDate = new Date(year, month, date);
-            
-            // Remove previous selection
-            document.querySelectorAll('.calendar-day').forEach(day => {
-                day.classList.remove('selected');
+        petCards.forEach(card => {
+            card.addEventListener('click', () => {
+                petCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                state.petType = card.dataset.pet;
+                checkStep1();
             });
-            
-            // Add selection to clicked date
-            clickedDay.classList.add('selected');
-            
-            // Show time selection
-            document.getElementById('timeSelection').style.display = 'block';
-            
-            // Update time slots based on service duration
-            updateTimeSlots();
-        }
-
-        function selectTime(element) {
-            if (element.classList.contains('disabled')) return;
-            
-            const totalDuration = calculateTotalDuration();
-            const timeSlots = document.querySelectorAll('.time-slot');
-            const selectedIndex = Array.from(timeSlots).indexOf(element);
-            const slotsNeeded = Math.ceil(totalDuration / 30);
-            
-            // Clear previous selection
-            timeSlots.forEach(slot => {
-                slot.classList.remove('selected', 'reserved');
-            });
-            
-            // Check if we have enough consecutive slots
-            let canReserve = true;
-            for (let i = 0; i < slotsNeeded; i++) {
-                if (selectedIndex + i >= timeSlots.length || timeSlots[selectedIndex + i].classList.contains('disabled')) {
-                    canReserve = false;
-                    break;
-                }
-            }
-            
-            if (!canReserve) {
-                alert('選択した時間からは必要な時間を確保できません。他の時間を選択してください。');
-                return;
-            }
-            
-            // Mark selected time and reserve subsequent slots
-            element.classList.add('selected');
-            selectedTime = element.textContent;
-            
-            // Mark reserved slots
-            for (let i = 1; i < slotsNeeded; i++) {
-                timeSlots[selectedIndex + i].classList.add('reserved');
-            }
-            
-            // Show selected time info
-            const startTime = element.textContent;
-            const endTimeMinutes = parseTimeToMinutes(startTime) + totalDuration;
-            const endTime = formatMinutesToTime(endTimeMinutes);
-            
-            document.getElementById('selectedTimeSpan').textContent = startTime;
-            document.getElementById('endTimeSpan').textContent = endTime;
-            document.getElementById('selectedTimeInfo').style.display = 'block';
-        }
-        
-        function parseTimeToMinutes(timeStr) {
-            const [hours, minutes] = timeStr.split(':').map(Number);
-            return hours * 60 + minutes;
-        }
-        
-        function formatMinutesToTime(minutes) {
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
-            return `${hours}:${mins.toString().padStart(2, '0')}`;
-        }
-
-        function toggleService(element) {
-            const checkbox = element.querySelector('input[type="checkbox"]');
-            checkbox.checked = !checkbox.checked;
-            element.classList.toggle('selected', checkbox.checked);
-            
-            // Calculate total duration
-            calculateTotalDuration();
-            
-            // Show calendar if at least one service is selected
-            const selectedServices = document.querySelectorAll('.service-option.selected');
-            if (selectedServices.length > 0) {
-                document.getElementById('calendarContainer').style.display = 'block';
-            } else {
-                document.getElementById('calendarContainer').style.display = 'none';
-                document.getElementById('timeSelection').style.display = 'none';
-            }
-            
-            // Update time slots if date is selected
-            if (selectedDate) {
-                updateTimeSlots();
-            }
-        }
-        
-        function calculateTotalDuration() {
-            let totalMinutes = 0;
-            const selectedServices = document.querySelectorAll('.service-option.selected');
-            
-            selectedServices.forEach(service => {
-                const duration = parseInt(service.getAttribute('data-duration') || 0);
-                totalMinutes += duration;
-            });
-            
-            document.getElementById('totalDuration').textContent = totalMinutes;
-            
-            if (totalMinutes > 0) {
-                document.getElementById('serviceDuration').classList.add('show');
-            } else {
-                document.getElementById('serviceDuration').classList.remove('show');
-            }
-            
-            return totalMinutes;
-        }
-        
-        function updateTimeSlots() {
-            const totalDuration = calculateTotalDuration();
-            const timeSlots = document.querySelectorAll('.time-slot');
-            const timeSlotsArray = Array.from(timeSlots);
-            
-            // Reset all slots
-            timeSlots.forEach(slot => {
-                slot.classList.remove('disabled', 'selected');
-            });
-            
-            // Disable slots based on duration
-            if (totalDuration > 0) {
-                const slotsNeeded = Math.ceil(totalDuration / 30); // 30分単位
-                
-                timeSlotsArray.forEach((slot, index) => {
-                    // ランダムに一部の時間帯を埋める
-                    if (Math.random() > 0.7) {
-                        slot.classList.add('disabled');
-                    }
-                    
-                    // 終業時間に近い場合、長時間のサービスは受付不可
-                    const remainingSlots = timeSlotsArray.length - index;
-                    if (remainingSlots < slotsNeeded) {
-                        slot.classList.add('disabled');
-                    }
-                });
-            } else {
-                // サービス未選択時は通常のランダム無効化
-                timeSlots.forEach(slot => {
-                    if (Math.random() > 0.7) {
-                        slot.classList.add('disabled');
-                    }
-                });
-            }
-        }
-
-        document.getElementById('reservationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('予約が完了しました！確認メールをお送りします。');
         });
 
-        // Initialize calendar
+        sizeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                sizeCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                state.petSize = card.dataset.size;
+                checkStep1();
+            });
+        });
+
+        function checkStep1() {
+            toStep2Btn.disabled = !(state.petType && state.petSize);
+        }
+
+        // Service Selection
+        const serviceItems = document.querySelectorAll('.service-item');
+        const toStep3Btn = document.getElementById('toStep3');
+
+        serviceItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('selected');
+
+                const service = {
+                    id: item.dataset.service,
+                    name: item.dataset.name,
+                    price: parseInt(item.dataset.price)
+                };
+
+                if (item.classList.contains('selected')) {
+                    state.services.push(service);
+                } else {
+                    state.services = state.services.filter(s => s.id !== service.id);
+                }
+
+                toStep3Btn.disabled = state.services.length === 0;
+            });
+        });
+
+        // Calendar
+        function renderCalendar() {
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+
+            document.getElementById('calendarMonth').textContent = `${year}年${month + 1}月`;
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDay = firstDay.getDay();
+            const totalDays = lastDay.getDate();
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let html = '';
+
+            for (let i = 0; i < startDay; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+
+            for (let day = 1; day <= totalDays; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay();
+                const isPast = date < today;
+                const isWednesday = dayOfWeek === 3;
+
+                let classes = 'calendar-day';
+                if (isPast || isWednesday) classes += ' disabled';
+                if (dayOfWeek === 0) classes += ' sunday';
+                if (dayOfWeek === 6) classes += ' saturday';
+
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+                html += `<div class="${classes}" data-date="${dateStr}">${day}</div>`;
+            }
+
+            document.getElementById('calendarDays').innerHTML = html;
+
+            document.querySelectorAll('.calendar-day:not(.disabled):not(.empty)').forEach(dayEl => {
+                dayEl.addEventListener('click', () => {
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                    dayEl.classList.add('selected');
+                    state.date = dayEl.dataset.date;
+                    showTimeSlots(dayEl.dataset.date);
+                });
+            });
+        }
+
+        function showTimeSlots(dateStr) {
+            const date = new Date(dateStr);
+            const options = { month: 'long', day: 'numeric', weekday: 'short' };
+            document.getElementById('selectedDateLabel').textContent = date.toLocaleDateString('ja-JP', options);
+
+            document.getElementById('timeSection').classList.add('show');
+
+            const slots = [];
+            for (let hour = 9; hour <= 17; hour++) {
+                slots.push(`${hour}:00`);
+                if (hour < 17) slots.push(`${hour}:30`);
+            }
+
+            const html = slots.map(time => {
+                const isDisabled = Math.random() < 0.25;
+                return `<div class="time-slot${isDisabled ? ' disabled' : ''}" data-time="${time}">${time}</div>`;
+            }).join('');
+
+            document.getElementById('timeGrid').innerHTML = html;
+
+            document.querySelectorAll('.time-slot:not(.disabled)').forEach(slot => {
+                slot.addEventListener('click', () => {
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                    slot.classList.add('selected');
+                    state.time = slot.dataset.time;
+                    document.getElementById('toStep4').disabled = false;
+                });
+            });
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            renderCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            renderCalendar();
+        });
+
+        // Form Validation
+        const agreeCheckbox = document.getElementById('agreeTerms');
+        const toStep5Btn = document.getElementById('toStep5');
+        let termsAgreed = false;
+
+        agreeCheckbox.addEventListener('click', () => {
+            termsAgreed = !termsAgreed;
+            agreeCheckbox.querySelector('.checkbox-box').classList.toggle('checked', termsAgreed);
+            validateForm();
+        });
+
+        function validateForm() {
+            const petName = document.getElementById('petName').value;
+            const ownerName = document.getElementById('ownerName').value;
+            const ownerNameKana = document.getElementById('ownerNameKana').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+
+            const isValid = petName && ownerName && ownerNameKana && phone && email && termsAgreed;
+            toStep5Btn.disabled = !isValid;
+        }
+
+        document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
+
+        // Step Navigation
+        function goToStep(step) {
+            currentStep = step;
+
+            document.querySelectorAll('.progress-step').forEach((el, index) => {
+                el.classList.remove('active', 'completed');
+                if (index + 1 < step) el.classList.add('completed');
+                if (index + 1 === step) el.classList.add('active');
+            });
+
+            document.querySelectorAll('.step-content').forEach(el => {
+                el.classList.remove('active');
+                if (parseInt(el.dataset.step) === step) el.classList.add('active');
+            });
+
+            updateSummaries();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateSummaries() {
+            const petTypeText = state.petType === 'dog' ? 'わんちゃん' : 'ねこちゃん';
+            const sizeText = { small: '小型', medium: '中型', large: '大型' }[state.petSize] || '';
+
+            document.getElementById('petSummary').innerHTML = `
+                <div class="summary-item">
+                    <span class="summary-label">種類:</span>
+                    <span class="summary-value">${petTypeText} (${sizeText})</span>
+                </div>
+            `;
+
+            if (state.services.length > 0) {
+                const serviceNames = state.services.map(s => s.name).join('、');
+                const total = state.services.reduce((sum, s) => sum + s.price, 0);
+                document.getElementById('serviceSummary').innerHTML = `
+                    <div class="summary-item">
+                        <span class="summary-label">メニュー:</span>
+                        <span class="summary-value">${serviceNames}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">合計:</span>
+                        <span class="summary-value">¥${total.toLocaleString()}〜</span>
+                    </div>
+                `;
+            }
+
+            if (state.date && state.time) {
+                const date = new Date(state.date);
+                const dateStr = date.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', weekday: 'short' });
+                document.getElementById('dateSummary').innerHTML = `
+                    <div class="summary-item">
+                        <span class="summary-label">日時:</span>
+                        <span class="summary-value">${dateStr} ${state.time}</span>
+                    </div>
+                `;
+            }
+        }
+
+        function updateConfirmation() {
+            const petTypeText = state.petType === 'dog' ? 'わんちゃん' : 'ねこちゃん';
+            const sizeText = { small: '小型', medium: '中型', large: '大型' }[state.petSize] || '';
+            const serviceNames = state.services.map(s => s.name).join('、');
+            const total = state.services.reduce((sum, s) => sum + s.price, 0);
+            const date = new Date(state.date);
+            const dateStr = date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
+
+            document.getElementById('confirmPetType').textContent = `${petTypeText} (${sizeText})`;
+            document.getElementById('confirmPetName').textContent = document.getElementById('petName').value;
+            document.getElementById('confirmService').textContent = serviceNames;
+            document.getElementById('confirmDateTime').textContent = `${dateStr} ${state.time}`;
+            document.getElementById('confirmPrice').textContent = `¥${total.toLocaleString()}〜`;
+            document.getElementById('confirmOwner').textContent = document.getElementById('ownerName').value;
+            document.getElementById('confirmPhone').textContent = document.getElementById('phone').value;
+            document.getElementById('confirmEmail').textContent = document.getElementById('email').value;
+        }
+
+        function completeBooking() {
+            const bookingNumber = 'WN' + Date.now().toString().slice(-8);
+            document.getElementById('bookingNumber').textContent = bookingNumber;
+
+            const date = new Date(state.date);
+            const dateStr = date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
+
+            document.getElementById('completeDateTime').textContent = `${dateStr} ${state.time}`;
+            document.getElementById('completeService').textContent = state.services.map(s => s.name).join('、');
+            document.getElementById('completePet').textContent = document.getElementById('petName').value;
+
+            goToStep(6);
+        }
+
+        // Button Events
+        document.getElementById('toStep2').addEventListener('click', () => goToStep(2));
+        document.getElementById('backToStep1').addEventListener('click', () => goToStep(1));
+        document.getElementById('toStep3').addEventListener('click', () => {
+            renderCalendar();
+            goToStep(3);
+        });
+        document.getElementById('backToStep2').addEventListener('click', () => goToStep(2));
+        document.getElementById('toStep4').addEventListener('click', () => goToStep(4));
+        document.getElementById('backToStep3').addEventListener('click', () => goToStep(3));
+        document.getElementById('toStep5').addEventListener('click', () => {
+            updateConfirmation();
+            goToStep(5);
+        });
+        document.getElementById('backToStep4').addEventListener('click', () => goToStep(4));
+        document.getElementById('confirmBooking').addEventListener('click', completeBooking);
+
+        // Initialize
         renderCalendar();
     </script>
 </body>

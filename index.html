@@ -3,282 +3,1179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ペットサロン わんにゃんパラダイス | トリミング・ペットホテル</title>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Kiwi+Maru:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>わんにゃんパラダイス | ペットサロン&ホテル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #FF6B6B;
+            --color-secondary: #4ECDC4;
+            --color-accent: #FFE66D;
+            --color-purple: #A78BFA;
+            --color-blue: #60A5FA;
+            --color-orange: #FB923C;
+            --color-dark: #2D3748;
+            --color-gray: #718096;
+            --color-light: #F7FAFC;
+            --color-white: #FFFFFF;
+            --font-main: 'Zen Maru Gothic', 'Nunito', sans-serif;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--color-dark);
+            line-height: 1.7;
+            background: var(--color-light);
+            overflow-x: hidden;
+        }
+
+        /* ===== Header with Bento-style Quick Access ===== */
+        .header {
+            background: var(--color-white);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .header-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .header-btn-tel {
+            background: var(--color-light);
+            color: var(--color-dark);
+        }
+
+        .header-btn-reserve {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .header-btn-reserve:hover {
+            background: #E55A5A;
+            transform: translateY(-1px);
+        }
+
+        /* ===== Bento Grid Hero ===== */
+        .bento-hero {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto auto;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .bento-hero {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .bento-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Main Card */
+        .bento-main {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #FF8E8E 100%);
+            color: var(--color-white);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 320px;
+            position: relative;
+        }
+
+        .bento-main-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .bento-main h1 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .bento-main p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+        }
+
+        .bento-main-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-white);
+            color: var(--color-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .bento-main-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .bento-main-pets {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.2;
+        }
+
+        .bento-main-pets img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Service Cards */
+        .bento-service {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bento-service-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .bento-service-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .bento-service h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .bento-service p {
+            font-size: 0.8rem;
+            color: var(--color-gray);
+            flex: 1;
+        }
+
+        .bento-service-price {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 0.5rem;
+        }
+
+        .service-trimming .bento-service-icon { background: #FEE2E2; }
+        .service-hotel .bento-service-icon { background: #DBEAFE; }
+        .service-spa .bento-service-icon { background: #D1FAE5; }
+        .service-pickup .bento-service-icon { background: #FEF3C7; }
+
+        /* Photo Card */
+        .bento-photo {
+            grid-column: span 2;
+            position: relative;
+            min-height: 180px;
+        }
+
+        .bento-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .bento-photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.6));
+            color: var(--color-white);
+        }
+
+        .bento-photo-overlay span {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Info Cards */
+        .bento-info {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--color-secondary) 0%, #6DD5CB 100%);
+            color: var(--color-white);
+        }
+
+        .bento-info h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .bento-info-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .bento-line {
+            padding: 1.25rem;
+            background: #06C755;
+            color: var(--color-white);
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .bento-line-icon {
+            font-size: 2rem;
+        }
+
+        .bento-line span {
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* ===== Gallery Section ===== */
+        .gallery-section {
+            padding: 3rem 1rem;
+            background: var(--color-white);
+        }
+
+        .section-header {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .section-title-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .section-link {
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .gallery-scroll {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gallery-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .gallery-scroll::-webkit-scrollbar-track {
+            background: var(--color-light);
+            border-radius: 3px;
+        }
+
+        .gallery-scroll::-webkit-scrollbar-thumb {
+            background: var(--color-gray);
+            border-radius: 3px;
+        }
+
+        .gallery-item {
+            flex-shrink: 0;
+            width: 200px;
+            scroll-snap-align: start;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+        }
+
+        .gallery-item-info {
+            padding: 0.5rem 0;
+        }
+
+        .gallery-item-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .gallery-item-breed {
+            font-size: 0.75rem;
+            color: var(--color-gray);
+        }
+
+        /* ===== Price Section ===== */
+        .price-section {
+            padding: 3rem 1rem;
+            background: var(--color-light);
+        }
+
+        .price-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .price-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .price-card-header {
+            padding: 1.25rem;
+            color: var(--color-white);
+            text-align: center;
+        }
+
+        .price-card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .price-card-trimming .price-card-header { background: linear-gradient(135deg, var(--color-primary) 0%, #FF8E8E 100%); }
+        .price-card-hotel .price-card-header { background: linear-gradient(135deg, var(--color-blue) 0%, #93C5FD 100%); }
+        .price-card-spa .price-card-header { background: linear-gradient(135deg, var(--color-secondary) 0%, #6DD5CB 100%); }
+
+        .price-card-body {
+            padding: 1rem;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed #E2E8F0;
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+        }
+
+        .price-row-label {
+            font-size: 0.9rem;
+        }
+
+        .price-row-label small {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--color-gray);
+        }
+
+        .price-row-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* ===== Reviews Section ===== */
+        .reviews-section {
+            padding: 3rem 1rem;
+            background: var(--color-white);
+        }
+
+        .reviews-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .review-card {
+            background: var(--color-light);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .review-meta h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .review-meta span {
+            font-size: 0.75rem;
+            color: var(--color-gray);
+        }
+
+        .review-stars {
+            color: #FBBF24;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .review-text {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            line-height: 1.7;
+        }
+
+        /* ===== Access Section ===== */
+        .access-section {
+            padding: 3rem 1rem;
+            background: var(--color-light);
+        }
+
+        .access-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .access-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .access-map {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 16/10;
+        }
+
+        .access-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .access-info {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+        }
+
+        .access-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .access-info-item {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .access-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .access-info-label {
+            width: 80px;
+            font-size: 0.8rem;
+            color: var(--color-gray);
+            flex-shrink: 0;
+        }
+
+        .access-info-value {
+            font-size: 0.9rem;
+        }
+
+        /* ===== CTA Section ===== */
+        .cta-section {
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
+            text-align: center;
+            color: var(--color-white);
+        }
+
+        .cta-section h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-section p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            padding: 0.875rem 2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-btn-primary {
+            background: var(--color-white);
+            color: var(--color-primary);
+        }
+
+        .cta-btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: var(--color-white);
+            border: 2px solid var(--color-white);
+        }
+
+        .cta-btn-secondary:hover {
+            background: var(--color-white);
+            color: var(--color-primary);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            padding: 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-copyright {
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ===== Floating Button ===== */
+        .floating-reserve {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 90;
+        }
+
+        .floating-reserve a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .floating-reserve a:hover {
+            transform: scale(1.1);
+        }
+
+        @media (min-width: 768px) {
+            .floating-reserve a {
+                width: auto;
+                padding: 0 1.5rem;
+                border-radius: 30px;
+                font-size: 0.9rem;
+                font-weight: 700;
+            }
+
+            .floating-reserve-text {
+                margin-left: 0.5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .floating-reserve-text {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- デスクトップ用ナビゲーションバー -->
-    <nav class="desktop-nav">
-        <div class="nav-container">
-            <div class="nav-logo">わんにゃんパラダイス</div>
-            <ul class="nav-menu">
-                <li><a href="#services">サービス案内</a></li>
-                <li><a href="#pricing">料金表</a></li>
-                <li><a href="#gallery">ギャラリー</a></li>
-                <li><a href="#testimonials">お客様の声</a></li>
-                <li><a href="#access">アクセス</a></li>
-                <li><a href="reservation.html" class="nav-reserve-btn">ご予約</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <!-- iOS風ナビゲーションバー（モバイル用） -->
-    <nav class="mobile-nav">
-        <div class="nav-title">わんにゃんパラダイス</div>
-        <div class="nav-actions">
-            <a href="reservation.html" class="nav-reserve-btn">予約</a>
-        </div>
-    </nav>
-    
-    <!-- ヘッダー・トップ画像 -->
-    <header class="hero">
-        <div class="hero-content">
-            <h1 class="salon-name">ペットサロン わんにゃんパラダイス</h1>
-            <p class="catchcopy">愛犬・愛猫の笑顔と健康を守る、やさしいサロン</p>
-            <a href="reservation.html" class="cta-button">ご予約はこちら</a>
-        </div>
-        <div class="hero-image">
-            <img src="images/hero-main.jpg" alt="トリミングされたペット">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <span class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="#FF6B6B">
+                        <ellipse cx="12" cy="17" rx="5" ry="4"/>
+                        <circle cx="6" cy="10" r="2.5"/>
+                        <circle cx="10" cy="6" r="2.5"/>
+                        <circle cx="14" cy="6" r="2.5"/>
+                        <circle cx="18" cy="10" r="2.5"/>
+                    </svg>
+                </span>
+                <span class="logo-text">わんにゃんパラダイス</span>
+            </a>
+            <div class="header-actions">
+                <a href="tel:0312345678" class="header-btn header-btn-tel">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    電話
+                </a>
+                <a href="reservation-v2.html" class="header-btn header-btn-reserve">予約する</a>
+            </div>
         </div>
     </header>
 
-    <!-- サービス案内 -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">サービス案内</h2>
-            <div class="service-grid">
-                <div class="service-item">
-                    <div class="service-icon">✂️</div>
-                    <h3>トリミング</h3>
-                    <p>経験豊富なトリマーが、わんちゃん・ねこちゃんに合わせた最適なカットを提供します。</p>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon">🏠</div>
-                    <h3>ペットホテル</h3>
-                    <p>安心・清潔な環境で、大切なペットをお預かりいたします。24時間体制で見守ります。</p>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon">🚗</div>
-                    <h3>送迎サービス</h3>
-                    <p>ご自宅までの送迎も承っております。お忙しい飼い主様も安心してご利用いただけます。</p>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon">🛁</div>
-                    <h3>シャンプー＆スパ</h3>
-                    <p>皮膚に優しいシャンプーを使用。マイクロバブルバスで毛穴の汚れもスッキリ。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 料金表 -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <h2 class="section-title">料金表</h2>
-            <div class="price-tables">
-                <div class="price-table">
-                    <h3>トリミング料金</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>サイズ</th>
-                                <th>シャンプーコース</th>
-                                <th>カットコース</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>小型犬<br><span class="small">（〜10kg）</span></td>
-                                <td>¥3,500〜</td>
-                                <td>¥5,500〜</td>
-                            </tr>
-                            <tr>
-                                <td>中型犬<br><span class="small">（10〜25kg）</span></td>
-                                <td>¥4,500〜</td>
-                                <td>¥7,000〜</td>
-                            </tr>
-                            <tr>
-                                <td>大型犬<br><span class="small">（25kg〜）</span></td>
-                                <td>¥6,000〜</td>
-                                <td>¥9,000〜</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="price-table">
-                    <h3>ペットホテル料金（1泊）</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>サイズ</th>
-                                <th>料金</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>小型犬・猫</td>
-                                <td>¥3,000</td>
-                            </tr>
-                            <tr>
-                                <td>中型犬</td>
-                                <td>¥4,000</td>
-                            </tr>
-                            <tr>
-                                <td>大型犬</td>
-                                <td>¥5,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p class="note">※長期割引あり（7泊以上10%OFF）</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ギャラリー -->
-    <section id="gallery" class="gallery">
-        <div class="container">
-            <h2 class="section-title">ギャラリー</h2>
-            <p class="section-subtitle">トリミング後のかわいい子たち</p>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="images/gallery-01.jpg" alt="トリミング後のトイプードル">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery-02.jpg" alt="トリミング後の柴犬">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery-03.jpg" alt="トリミング後のマルチーズ">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery-04.jpg" alt="トリミング後のポメラニアン">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery-05.jpg" alt="トリミング後の猫">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery-06.jpg" alt="トリミング後のダックスフンド">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- お客様の声 -->
-    <section id="testimonials" class="testimonials">
-        <div class="container">
-            <h2 class="section-title">お客様の声</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-item">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">いつも丁寧にカットしていただき、うちの子も喜んでいます。スタッフの皆さんも優しくて安心してお任せできます。</p>
-                    <p class="customer-name">トイプードル・3歳の飼い主様</p>
-                </div>
-                <div class="testimonial-item">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">ペットホテルを利用しました。清潔で広々としていて、定期的に様子を教えてくれるので安心でした。</p>
-                    <p class="customer-name">柴犬・5歳の飼い主様</p>
-                </div>
-                <div class="testimonial-item">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">送迎サービスがとても助かっています。仕事で忙しい時でも、安心してトリミングをお願いできます。</p>
-                    <p class="customer-name">マルチーズ・7歳の飼い主様</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 予約方法・LINE案内 -->
-    <section id="reservation" class="reservation">
-        <div class="container">
-            <h2 class="section-title">ご予約方法</h2>
-            
-            <!-- Web予約フォーム（上段） -->
-            <div class="web-reservation">
-                <a href="reservation.html" class="web-reserve-button">
-                    <span class="button-icon">🌐</span>
-                    <span class="button-text">Web予約フォームへ</span>
+    <!-- Bento Grid Hero -->
+    <section class="bento-hero">
+        <!-- Main Card -->
+        <div class="bento-card bento-main">
+            <div class="bento-main-content">
+                <h1>愛犬・愛猫の<br>笑顔と健康を守る</h1>
+                <p>経験豊富なスタッフが、大切な家族を<br>心を込めてお世話します</p>
+                <a href="reservation-v2.html" class="bento-main-cta">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    今すぐ予約する
                 </a>
             </div>
-            
-            <!-- LINE予約と電話予約（下段） -->
-            <div class="reservation-methods">
-                <div class="method-item">
-                    <h3>📱 LINE予約</h3>
-                    <p>24時間いつでも予約可能！<br>お友達登録で初回10%OFF</p>
-                    <a href="#" class="line-button">LINE友達追加</a>
-                    <p class="reservation-note">または</p>
-                    <img src="images/line-qr.png" alt="LINE QRコード" class="qr-code">
+            <div class="bento-main-pets">
+                <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80" alt="Happy Dog">
+            </div>
+        </div>
+
+        <!-- Service Cards -->
+        <div class="bento-card bento-service service-trimming">
+            <div class="bento-service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/>
+                </svg>
+            </div>
+            <h3>トリミング</h3>
+            <p>プロのトリマーが丁寧にカット</p>
+            <div class="bento-service-price">¥3,500〜</div>
+        </div>
+
+        <div class="bento-card bento-service service-hotel">
+            <div class="bento-service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+            </div>
+            <h3>ペットホテル</h3>
+            <p>24時間体制でお預かり</p>
+            <div class="bento-service-price">¥3,000〜/泊</div>
+        </div>
+
+        <!-- Photo Card -->
+        <div class="bento-card bento-photo">
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=80" alt="Happy Dogs">
+            <div class="bento-photo-overlay">
+                <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>トリミング後のワンちゃんたち</span>
+            </div>
+        </div>
+
+        <!-- More Service Cards -->
+        <div class="bento-card bento-service service-spa">
+            <div class="bento-service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="10" y1="5" x2="8" y2="7"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="7" y1="19" x2="7" y2="21"/><line x1="17" y1="19" x2="17" y2="21"/>
+                </svg>
+            </div>
+            <h3>シャンプー&スパ</h3>
+            <p>マイクロバブルでふわふわに</p>
+            <div class="bento-service-price">¥2,500〜</div>
+        </div>
+
+        <div class="bento-card bento-service service-pickup">
+            <div class="bento-service-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/>
+                </svg>
+            </div>
+            <h3>送迎サービス</h3>
+            <p>ご自宅までお迎えに</p>
+            <div class="bento-service-price">¥500〜</div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="bento-card bento-info">
+            <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>営業時間</h3>
+            <div class="bento-info-value">9:00-18:00</div>
+        </div>
+
+        <a href="#" class="bento-card bento-line">
+            <span class="bento-line-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                </svg>
+            </span>
+            <span>LINE予約で<br>初回10%OFF</span>
+        </a>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+                    </svg>
+                </span>
+                ギャラリー
+            </h2>
+            <a href="#" class="section-link">もっと見る →</a>
+        </div>
+        <div class="gallery-scroll">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80" alt="Dog 1">
+                <div class="gallery-item-info">
+                    <div class="gallery-item-name">ポチくん</div>
+                    <div class="gallery-item-breed">トイプードル</div>
                 </div>
-                <div class="method-item">
-                    <h3>📞 お電話予約</h3>
-                    <p>営業時間内にお電話ください</p>
-                    <p class="phone-number">03-1234-5678</p>
-                    <p class="small">受付時間：9:00〜18:00</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&q=80" alt="Dog 2">
+                <div class="gallery-item-info">
+                    <div class="gallery-item-name">マロンちゃん</div>
+                    <div class="gallery-item-breed">柴犬</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&q=80" alt="Dog 3">
+                <div class="gallery-item-info">
+                    <div class="gallery-item-name">レオくん</div>
+                    <div class="gallery-item-breed">ダックスフンド</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&q=80" alt="Cat 1">
+                <div class="gallery-item-info">
+                    <div class="gallery-item-name">ミケちゃん</div>
+                    <div class="gallery-item-breed">スコティッシュ</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=400&q=80" alt="Dog 4">
+                <div class="gallery-item-info">
+                    <div class="gallery-item-name">ココちゃん</div>
+                    <div class="gallery-item-breed">マルチーズ</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&q=80" alt="Cat 2">
+                <div class="gallery-item-info">
+                    <div class="gallery-item-name">ソラくん</div>
+                    <div class="gallery-item-breed">マンチカン</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 地図・アクセス・営業時間 -->
-    <section id="access" class="access">
-        <div class="container">
-            <h2 class="section-title">アクセス・営業時間</h2>
-            <div class="access-content">
-                <div class="map">
-                    <img src="images/map.jpg" alt="アクセスマップ">
+    <!-- Price Section -->
+    <section class="price-section" id="pricing">
+        <div class="section-header" style="max-width: 1200px; margin: 0 auto 2rem; padding: 0;">
+            <h2 class="section-title">
+                <span class="section-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#4ECDC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </span>
+                料金表
+            </h2>
+        </div>
+        <div class="price-grid">
+            <div class="price-card price-card-trimming">
+                <div class="price-card-header">
+                    <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>トリミング</h3>
                 </div>
-                <div class="shop-info">
-                    <h3>ペットサロン わんにゃんパラダイス</h3>
-                    <table class="info-table">
-                        <tr>
-                            <th>住所</th>
-                            <td>〒123-4567<br>東京都○○区△△1-2-3</td>
-                        </tr>
-                        <tr>
-                            <th>電話</th>
-                            <td>03-1234-5678</td>
-                        </tr>
-                        <tr>
-                            <th>営業時間</th>
-                            <td>9:00〜18:00</td>
-                        </tr>
-                        <tr>
-                            <th>定休日</th>
-                            <td>毎週水曜日・第3火曜日</td>
-                        </tr>
-                        <tr>
-                            <th>駐車場</th>
-                            <td>3台完備</td>
-                        </tr>
-                        <tr>
-                            <th>最寄り駅</th>
-                            <td>○○線△△駅から徒歩5分</td>
-                        </tr>
-                    </table>
+                <div class="price-card-body">
+                    <div class="price-row">
+                        <div class="price-row-label">小型犬<small>〜10kg</small></div>
+                        <div class="price-row-value">¥3,500〜</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">中型犬<small>10〜25kg</small></div>
+                        <div class="price-row-value">¥4,500〜</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">大型犬<small>25kg〜</small></div>
+                        <div class="price-row-value">¥6,000〜</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">猫</div>
+                        <div class="price-row-value">¥5,000〜</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-card price-card-hotel">
+                <div class="price-card-header">
+                    <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>ペットホテル</h3>
+                </div>
+                <div class="price-card-body">
+                    <div class="price-row">
+                        <div class="price-row-label">小型犬・猫</div>
+                        <div class="price-row-value">¥3,000/泊</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">中型犬</div>
+                        <div class="price-row-value">¥4,000/泊</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">大型犬</div>
+                        <div class="price-row-value">¥5,000/泊</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">長期割引<small>7泊以上</small></div>
+                        <div class="price-row-value">10%OFF</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-card price-card-spa">
+                <div class="price-card-header">
+                    <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="10" y1="5" x2="8" y2="7"/><line x1="2" y1="12" x2="22" y2="12"/></svg>シャンプー&スパ</h3>
+                </div>
+                <div class="price-card-body">
+                    <div class="price-row">
+                        <div class="price-row-label">シャンプーコース</div>
+                        <div class="price-row-value">¥2,500〜</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">マイクロバブル</div>
+                        <div class="price-row-value">+¥1,000</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">薬用シャンプー</div>
+                        <div class="price-row-value">+¥500</div>
+                    </div>
+                    <div class="price-row">
+                        <div class="price-row-label">送迎サービス</div>
+                        <div class="price-row-value">¥500〜</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- フッター -->
+    <!-- Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="section-header" style="max-width: 1200px; margin: 0 auto 2rem; padding: 0 1rem;">
+            <h2 class="section-title">
+                <span class="section-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </span>
+                お客様の声
+            </h2>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Customer" class="review-avatar">
+                    <div class="review-meta">
+                        <h4>ポチくんのママ</h4>
+                        <span>トイプードル・3歳</span>
+                    </div>
+                </div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">いつも丁寧にカットしていただき感謝しています。スタッフの皆さんが優しくて、うちの子も喜んで通っています！</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Customer" class="review-avatar">
+                    <div class="review-meta">
+                        <h4>マロンのパパ</h4>
+                        <span>柴犬・5歳</span>
+                    </div>
+                </div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">ペットホテルを初めて利用しました。定期的に様子を写真で送ってくれて安心でした。また利用します！</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Customer" class="review-avatar">
+                    <div class="review-meta">
+                        <h4>ミケちゃんのママ</h4>
+                        <span>スコティッシュ・2歳</span>
+                    </div>
+                </div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">猫のトリミングをしてくれるサロンが少ない中、とても助かっています。仕上がりも毎回キレイで大満足です。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access Section -->
+    <section class="access-section" id="access">
+        <div class="section-header" style="max-width: 1200px; margin: 0 auto 2rem; padding: 0 1rem;">
+            <h2 class="section-title">
+                <span class="section-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                </span>
+                アクセス
+            </h2>
+        </div>
+        <div class="access-content">
+            <div class="access-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.828030555053!2d139.76454931525882!3d35.68123618019432!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfbd89f700b%3A0x277c49ba34ed38!2z5p2x5Lqs6aeF!5e0!3m2!1sja!2sjp!4v1680000000000!5m2!1sja!2sjp" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="access-info">
+                <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="#FF6B6B" style="display:inline;vertical-align:middle;margin-right:6px;"><ellipse cx="12" cy="17" rx="5" ry="4"/><circle cx="6" cy="10" r="2.5"/><circle cx="10" cy="6" r="2.5"/><circle cx="14" cy="6" r="2.5"/><circle cx="18" cy="10" r="2.5"/></svg>わんにゃんパラダイス</h3>
+                <div class="access-info-item">
+                    <div class="access-info-label">住所</div>
+                    <div class="access-info-value">〒123-4567<br>東京都○○区△△1-2-3</div>
+                </div>
+                <div class="access-info-item">
+                    <div class="access-info-label">電話</div>
+                    <div class="access-info-value">03-1234-5678</div>
+                </div>
+                <div class="access-info-item">
+                    <div class="access-info-label">営業時間</div>
+                    <div class="access-info-value">9:00〜18:00</div>
+                </div>
+                <div class="access-info-item">
+                    <div class="access-info-label">定休日</div>
+                    <div class="access-info-value">毎週水曜日・第3火曜日</div>
+                </div>
+                <div class="access-info-item">
+                    <div class="access-info-label">駐車場</div>
+                    <div class="access-info-value">3台完備</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>ご予約お待ちしています</h2>
+        <p>Webから24時間いつでも予約OK！LINEなら初回10%OFF</p>
+        <div class="cta-buttons">
+            <a href="reservation-v2.html" class="cta-btn cta-btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Web予約する
+            </a>
+            <a href="#" class="cta-btn cta-btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+                LINE予約
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <h3>ペットサロン わんにゃんパラダイス</h3>
-                    <p>愛犬・愛猫の笑顔と健康を守る、やさしいサロン</p>
-                </div>
-                <div class="footer-sns">
-                    <a href="#" class="sns-link">Instagram</a>
-                    <a href="#" class="sns-link">Facebook</a>
-                    <a href="#" class="sns-link">Twitter</a>
-                </div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6B6B"><ellipse cx="12" cy="17" rx="5" ry="4"/><circle cx="6" cy="10" r="2.5"/><circle cx="10" cy="6" r="2.5"/><circle cx="14" cy="6" r="2.5"/><circle cx="18" cy="10" r="2.5"/></svg>
+                わんにゃんパラダイス
             </div>
-            <div class="copyright">
-                <p>&copy; 2024 ペットサロン わんにゃんパラダイス. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#pricing">料金表</a>
+                <a href="#reviews">口コミ</a>
+                <a href="#access">アクセス</a>
+                <a href="reservation-v2.html">予約</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2024 わんにゃんパラダイス All rights reserved.
             </div>
         </div>
     </footer>
+
+    <!-- Floating Reserve Button -->
+    <div class="floating-reserve">
+        <a href="reservation-v2.html">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="floating-reserve-text">予約する</span>
+        </a>
+    </div>
 </body>
 </html>
